@@ -1,4 +1,4 @@
-package org.example
+package br.com.douglasor.oliveiragames.model
 
 data class Game(val title:String,val thumbmail:String) {
     var description:String? = null
