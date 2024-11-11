@@ -2,14 +2,8 @@ package org.example.br.com.douglasor.oliveiragames
 
 import ageFormat
 import br.com.douglasor.oliveiragames.model.Game
-import br.com.douglasor.oliveiragames.model.GameInfo
 import br.com.douglasor.oliveiragames.model.Gamer
 import br.com.douglasor.oliveiragames.services.FetchApi
-import com.google.gson.Gson
-import java.net.URI
-import java.net.http.HttpClient
-import java.net.http.HttpRequest
-import java.net.http.HttpResponse.BodyHandlers
 import java.util.Scanner
 
 
@@ -27,7 +21,7 @@ fun main() {
         val id = input.nextLine()
 
         val fetchData = FetchApi()
-        val gameData = fetchData.getApiData(id)
+        val gameData = fetchData.fetchGame(id)
 
         var myGame: Game? = null
 
@@ -86,7 +80,7 @@ fun main() {
     if (options.equals("s", true)) {
         println(gamer.searchedGames)
         println("\nInforme a posição do jogo que deseja excluir: ")
-        val position =input.nextInt()
+        val position = input.nextInt()
         gamer.searchedGames.removeAt(position)
     }
 
