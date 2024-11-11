@@ -1,6 +1,6 @@
 package br.com.douglasor.oliveiragames.model
 
-import java.util.Scanner
+import java.util.*
 import kotlin.random.Random
 
 data class Gamer(var name: String, var email: String) {
@@ -15,6 +15,8 @@ data class Gamer(var name: String, var email: String) {
     var internalId: String? = null
         private set
     val searchedGames = mutableListOf<Game?>()
+    val rentedGames: MutableList<Rent> = mutableListOf<Rent>()
+    var plan: Plan = BasicPlan("BRONZE")
 
     constructor(name: String, email: String, birthDate: String, user: String) : this(name, email) {
         this.birthDate = birthDate
@@ -48,6 +50,19 @@ data class Gamer(var name: String, var email: String) {
         }
     }
 
+    fun rentGame(game: Game, period: Period): Rent {
+        val rent = Rent(this, game, period)
+        rentedGames.add(rent)
+
+        return rent
+    }
+
+    fun findGameByMonth(month: Int): List<Game> {
+        return rentedGames
+            .filter { rented -> rented.period.startDate.monthValue == month }
+            .map { rented -> rented.game }
+    }
+
     companion object {
         fun criarGamer(leitura: Scanner): Gamer {
             println("Boas vindas ao AluGames! Vamos fazer seu cadastro. Digite seu nome:")
@@ -65,7 +80,7 @@ data class Gamer(var name: String, var email: String) {
 
                 return Gamer(nome, email, nascimento, usuario)
             } else {
-                return Gamer (nome, email)
+                return Gamer(nome, email)
             }
 
         }

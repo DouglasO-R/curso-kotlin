@@ -21,7 +21,7 @@ fun main() {
         val id = input.nextLine()
 
         val fetchData = FetchApi()
-        val gameData = fetchData.fetchGame(id)
+        val gameData = fetchData.fetchGameById(id)
 
         var myGame: Game? = null
 

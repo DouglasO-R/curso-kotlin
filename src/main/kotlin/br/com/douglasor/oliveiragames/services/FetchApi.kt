@@ -1,8 +1,7 @@
 package br.com.douglasor.oliveiragames.services
 
-import br.com.douglasor.oliveiragames.model.GameInfo
-import br.com.douglasor.oliveiragames.model.Gamer
-import br.com.douglasor.oliveiragames.model.InfoGamerJson
+import br.com.douglasor.oliveiragames.model.*
+import br.com.douglasor.oliveiragames.utils.generateGame
 import br.com.douglasor.oliveiragames.utils.generateGamer
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -23,7 +22,7 @@ class FetchApi {
         return json
     }
 
-    fun fetchGame(id: String): GameInfo {
+    fun fetchGameById(id: String): GameInfo {
         val url = "https://www.cheapshark.com/api/1.0/games?id=$id"
         val json = fetchData(url)
 
@@ -43,6 +42,20 @@ class FetchApi {
         val gamerList = gamerInfoList.map { infoGamerJson -> infoGamerJson.generateGamer() }
 
         return gamerList
-
     }
+
+    fun fetchGame(): List<Game> {
+        val url = "https://raw.githubusercontent.com/jeniblodev/arquivosJson/main/jogos.json"
+        val json = fetchData(url)
+
+        val gson: Gson = Gson()
+        val myGameType = object : TypeToken<List<InfoGameJson>>() {}.type
+        val gameInfoList: List<InfoGameJson> = gson.fromJson(json, myGameType)
+
+        val gameList = gameInfoList.map { infoGameJson -> infoGameJson.generateGame() }
+
+        return gameList
+    }
+
+
 }
