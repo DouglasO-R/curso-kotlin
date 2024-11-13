@@ -6,8 +6,10 @@ class BasicPlan(
 
     override fun getValue(rent: Rent): Double {
         var price = super.getValue(rent)
-        if(rent.gamer.average > 8){
-            price -= price * 0.1
+        val discount = price * 0.1
+
+        if(rent.gamer.average > 5){
+            price -= discount
         }
         return price
     }

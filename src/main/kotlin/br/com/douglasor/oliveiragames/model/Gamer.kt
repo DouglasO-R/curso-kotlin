@@ -1,5 +1,6 @@
 package br.com.douglasor.oliveiragames.model
 
+import br.com.douglasor.oliveiragames.utils.formatter
 import java.util.*
 import kotlin.random.Random
 
@@ -17,14 +18,11 @@ data class Gamer(var name: String, var email: String) : Recommendation {
     val searchedGames = mutableListOf<Game?>()
     val rentedGames: MutableList<Rent> = mutableListOf<Rent>()
     var plan: Plan = BasicPlan("BRONZE")
+    val recommendedGames = mutableListOf<Game>()
     private val recommendationList = mutableListOf<Int>()
 
     override val average: Double
-        get() = recommendationList.average()
-
-    override fun recommend(grade: Int) {
-        recommendationList.add(grade)
-    }
+        get() = recommendationList.average().formatter()
 
     constructor(name: String, email: String, birthDate: String, user: String) : this(name, email) {
         this.birthDate = birthDate
@@ -39,6 +37,15 @@ data class Gamer(var name: String, var email: String) : Recommendation {
         this.email = emailValidate()
     }
 
+    override fun recommend(grade: Int) {
+        recommendationList.add(grade)
+    }
+
+    fun recommendGame(game:Game,score:Int){
+        game.recommend(score)
+        recommendedGames.add(game)
+    }
+
 
     override fun toString(): String {
         return "Gamer:\n " +
@@ -47,7 +54,7 @@ data class Gamer(var name: String, var email: String) : Recommendation {
                 " dataNascimento:$birthDate\n" +
                 " usuario:$user\n" +
                 " idInterno:$internalId\n" +
-                " Reputacao:$average\n" +
+                " Reputacao:${average}\n" +
                 " Plan: $plan"
     }
 

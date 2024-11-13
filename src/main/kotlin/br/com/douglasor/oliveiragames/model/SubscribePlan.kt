@@ -1,5 +1,7 @@
 package br.com.douglasor.oliveiragames.model
 
+import br.com.douglasor.oliveiragames.utils.formatter
+
 class SubscribePlan(
     type: String,
     val monthlyFee: Double,
@@ -14,8 +16,10 @@ class SubscribePlan(
             0.0
         } else {
             var price = super.getValue(rent)
+            val discount = price * discountPerRecommendation
+
             if (rent.gamer.average > 5) {
-                price -= (price * discountPerRecommendation)
+                price -= discount
             }
             price
         }
