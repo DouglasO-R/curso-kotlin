@@ -40,15 +40,29 @@ fun main() {
 //    println(gamer.findGameByMonth(10))
 
     val gamer2 = gamerList[2]
-    gamer2.plan = SubscribePlan("GOLD", 9.90, 3)
+    gamer2.plan = SubscribePlan("GOLD", 9.90, 1,0.50)
 
     gamer2.rentGame(game1, rentalPeriod)
     gamer2.rentGame(game2, rentalPeriod2)
     gamer2.rentGame(game3, rentalPeriod3)
-    gamer2.rentGame(game3, rentalPeriod7)
-    gamer2.rentGame(game3, rentalPeriod8)
-    gamer2.rentGame(game3, rentalPeriod9)
+    gamer2.rentGame(game4, rentalPeriod4)
+    gamer2.rentGame(game6, rentalPeriod6)
+    gamer2.rentGame(game5, rentalPeriod5)
 
+//    println(gamer.rentedGames)
+
+    gamer2.recommend(10)
+    gamer2.recommend(8)
+    gamer2.recommend(8)
+    gamer2.recommend(9)
+
+
+    gamer.recommend(10)
+    gamer.recommend(8)
+    gamer.recommend(8)
+    gamer.recommend(9)
 
     println(gamer2.rentedGames)
+    println(gamer.rentedGames)
+
 }

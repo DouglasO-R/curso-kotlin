@@ -3,7 +3,7 @@ package br.com.douglasor.oliveiragames.model
 import java.util.*
 import kotlin.random.Random
 
-data class Gamer(var name: String, var email: String) {
+data class Gamer(var name: String, var email: String) : Recommendation {
     var birthDate: String? = null
     var user: String? = null
         set(value) {
@@ -17,6 +17,14 @@ data class Gamer(var name: String, var email: String) {
     val searchedGames = mutableListOf<Game?>()
     val rentedGames: MutableList<Rent> = mutableListOf<Rent>()
     var plan: Plan = BasicPlan("BRONZE")
+    private val recommendationList = mutableListOf<Int>()
+
+    override val average: Double
+        get() = recommendationList.average()
+
+    override fun recommend(grade: Int) {
+        recommendationList.add(grade)
+    }
 
     constructor(name: String, email: String, birthDate: String, user: String) : this(name, email) {
         this.birthDate = birthDate
@@ -31,8 +39,16 @@ data class Gamer(var name: String, var email: String) {
         this.email = emailValidate()
     }
 
+
     override fun toString(): String {
-        return "Gamer(nome='$name', email='$email', dataNascimento=$birthDate, usuario=$user, idInterno=$internalId)"
+        return "Gamer:\n " +
+                " Nome:$name\n" +
+                " email:$email\n" +
+                " dataNascimento:$birthDate\n" +
+                " usuario:$user\n" +
+                " idInterno:$internalId\n" +
+                " Reputacao:$average\n" +
+                " Plan: $plan"
     }
 
     fun generateInternalId() {
